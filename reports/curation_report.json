@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-27T10:17:00.006577",
+  "generated_at": "2026-09-27T11:35:04.596775",
   "candidate_count": 9245,
   "review_sample_count": 400,
   "major_item_categories": {
@@ -35,9 +35,9 @@
       "exact_overlap_pct": 95.06,
       "possible_overlap_count": 24,
       "possible_overlap_pct": 4.94,
-      "genuinely_new_count": 0,
-      "genuinely_new_pct": 0.0,
-      "finding": "100% of NTPC items (462 verbatim + 24 with trailing punctuation) have direct source provenance in the corpus. Zero genuinely new records were omitted."
+      "unmatched_count": 0,
+      "unmatched_pct": 0.0,
+      "finding": "462 descriptions match after whitespace trimming; 24 additional descriptions match after stripping whitespace and |:.- from both ends; 0 have no match under these comparisons. Description overlap does not establish record identity or source provenance."
     },
     "iocl_audit": {
       "total_records": 1224,
@@ -45,26 +45,28 @@
       "exact_overlap_pct": 93.71,
       "possible_overlap_count": 45,
       "possible_overlap_pct": 3.68,
-      "genuinely_new_count": 32,
-      "genuinely_new_pct": 2.61,
+      "unmatched_count": 32,
+      "unmatched_pct": 2.61,
+      "finding": "1147 descriptions match after whitespace trimming; 45 additional descriptions match after stripping whitespace and |:.- from both ends; 32 have no match under these comparisons. Description overlap does not establish record identity or source provenance.",
+      "unmatched_description_length_lt_8_count": 32,
       "new_samples": [
         {
           "item_description": "Filters",
-          "quantity": NaN,
+          "quantity": null,
           "unit": "Nos.",
-          "estimated_value_rs_crores": NaN
+          "estimated_value_rs_crores": null
         },
         {
           "item_description": "Driers",
-          "quantity": NaN,
+          "quantity": null,
           "unit": "Nos.",
-          "estimated_value_rs_crores": NaN
+          "estimated_value_rs_crores": null
         },
         {
           "item_description": "Boiler",
-          "quantity": NaN,
+          "quantity": null,
           "unit": "Nos.",
-          "estimated_value_rs_crores": NaN
+          "estimated_value_rs_crores": null
         },
         {
           "item_description": "Service",
@@ -80,21 +82,21 @@
         },
         {
           "item_description": "Filters",
-          "quantity": NaN,
-          "unit": NaN,
-          "estimated_value_rs_crores": NaN
+          "quantity": null,
+          "unit": null,
+          "estimated_value_rs_crores": null
         },
         {
           "item_description": "Driers",
-          "quantity": NaN,
-          "unit": NaN,
-          "estimated_value_rs_crores": NaN
+          "quantity": null,
+          "unit": null,
+          "estimated_value_rs_crores": null
         },
         {
           "item_description": "Boiler",
-          "quantity": NaN,
-          "unit": NaN,
-          "estimated_value_rs_crores": NaN
+          "quantity": null,
+          "unit": null,
+          "estimated_value_rs_crores": null
         },
         {
           "item_description": "Service",
@@ -109,27 +111,81 @@
           "estimated_value_rs_crores": "3"
         }
       ],
-      "finding": "Exactly 32 records (2.61%) were excluded from the corpus purely because their description string length was < 8 characters (e.g. 'Boiler', 'Valves', 'Filters', 'GC-FID'). These are valid item lines with quantities and budget figures."
+      "hypothesis": "An upstream length filter may explain short unmatched descriptions; this local comparison does not verify the extraction logic or suitability of those records."
     },
     "cross_file_overlap": {
       "common_items_count": 0,
       "common_items": [],
-      "finding": "0 common descriptions between NTPC and IOCL items; vocabularies represent distinct power vs refinery domains."
+      "finding": "0 shared descriptions after lowercasing and stripping whitespace and |:.- from both ends. This does not establish that the domains or vocabularies are disjoint."
     },
-    "provenance_preservation": {
-      "source_urls_present": true,
-      "document_urls_present": true,
-      "identifiers_preserved": [
-        "corpus_id",
-        "tender_reference",
-        "tender_id",
-        "nit_id",
-        "doc_name",
-        "page",
-        "section",
-        "sl_no"
-      ],
-      "no_synthetic_codes": true
+    "provenance_coverage": {
+      "method": "Counts of nonempty source fields; no external URL validation or cross-file identity proof.",
+      "corpus": {
+        "corpus_id": {
+          "column_present": true,
+          "nonempty_rows": 21513,
+          "total_rows": 21513
+        },
+        "source_url": {
+          "column_present": true,
+          "nonempty_rows": 20534,
+          "total_rows": 21513
+        },
+        "document_url": {
+          "column_present": true,
+          "nonempty_rows": 4375,
+          "total_rows": 21513
+        },
+        "tender_reference": {
+          "column_present": true,
+          "nonempty_rows": 20557,
+          "total_rows": 21513
+        },
+        "tender_id": {
+          "column_present": true,
+          "nonempty_rows": 2055,
+          "total_rows": 21513
+        }
+      },
+      "ntpc": {
+        "nit_id": {
+          "column_present": true,
+          "nonempty_rows": 486,
+          "total_rows": 486
+        },
+        "doc_name": {
+          "column_present": true,
+          "nonempty_rows": 486,
+          "total_rows": 486
+        },
+        "line_no": {
+          "column_present": true,
+          "nonempty_rows": 486,
+          "total_rows": 486
+        }
+      },
+      "iocl": {
+        "source_pdf": {
+          "column_present": true,
+          "nonempty_rows": 1224,
+          "total_rows": 1224
+        },
+        "page": {
+          "column_present": true,
+          "nonempty_rows": 1224,
+          "total_rows": 1224
+        },
+        "section": {
+          "column_present": true,
+          "nonempty_rows": 74,
+          "total_rows": 1224
+        },
+        "sl_no": {
+          "column_present": true,
+          "nonempty_rows": 1224,
+          "total_rows": 1224
+        }
+      }
     }
   }
 }

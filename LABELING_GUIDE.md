@@ -131,10 +131,11 @@ When a description sits on the boundary between two categories, use these decisi
 
 ## 4. Review Workflow Instructions
 
-1. Open `reports/classification_review.csv` in Excel, LibreOffice Calc, or your preferred CSV editor.
+1. Open your assigned `reports/review_batches/review_01.csv` through `review_06.csv` in a CSV editor. Keep IDs and source columns as text. Do not edit the original `reports/classification_review.csv`.
 2. For each row:
    - Read `description`, `organization`, `source_url`, and `rule_fired`.
    - In `human_label`, enter one of: `individual_material`, `service_or_works`, `broad_tender_package`, `administrative_notice`, `broad_tender_title`, or `unclassified_or_other`.
    - In `usable_for_matching`, enter `TRUE` if the record is suitable for training/evaluating the material code harmonizer, or `FALSE` otherwise.
    - In `reviewer_note`, add brief notes if the case is borderline or illustrates a recurring issue.
-3. Save the completed file back to `reports/classification_review.csv`.
+3. Save your assigned review file as UTF-8 CSV. Edit only `human_label`, `usable_for_matching`, and `reviewer_note`; preserve every other field. Leave uncertain labels blank pending adjudication.
+4. Return all six files for validation and combination using `review_classification.py combine` as documented in README.md. The tool never overwrites the original review sheet or an existing output directory.

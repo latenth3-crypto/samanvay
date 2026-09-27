@@ -4,7 +4,7 @@ This repository contains **Phase 1** of **SIH26099: AI-Driven Standardization & 
 
 In accordance with Phase 1 scope requirements:
 - **Phase 1A Scope:** Data acquisition, schema auditing, material vs. service filtering assessment, cross-file overlap detection, and statistical profiling.
-- **Phase 1B Scope:** Validation of material classification, creation of a stratified review sample (400 records), curation of provisional material candidates (`data/processed/material_candidates.csv`), and deep provenance overlap audit.
+- **Phase 1B Scope:** Preparation for human validation of material classification, creation of a stratified review sample (400 records), curation of provisional material candidates (`data/processed/material_candidates.csv`), and deep provenance overlap audit.
 - **Out of Scope for Phase 1:** No matching models, APIs, databases, or UIs are built. No synthetic CPSE material codes or hypothetical accuracy metrics are created.
 
 ---
@@ -83,6 +83,40 @@ the rule alone does not repair older Git blobs.
   - **Broad Tenders & Services:** **12,268** (57.03%)
 - **Technical Attribute Density:** **2,911** material candidates (31.49%) possess explicit technical engineering attributes (dimensions, grades, standards, ratings, pressure classes, or catalog numbers).
 - **Cross-File Overlap Audit:**
-  - NTPC Items: 100% provenance in main corpus (462 verbatim, 24 with trailing punctuation stripped). 0 genuinely new items omitted.
-  - IOCL Items: 97.39% provenance in main corpus (1,147 verbatim, 45 with trailing punctuation stripped). Exactly 32 valid items were omitted from the main corpus table purely due to an upstream 8-character filter (e.g. `Boiler`, `Valves`, `Filters`, `DG Set`).
-  - NTPC vs. IOCL: 0 verbatim common descriptions (completely disjoint domain vocabularies).
+  - NTPC: 462 descriptions match after whitespace trimming; 24 additional matches after stripping punctuation at both ends; zero unmatched descriptions.
+  - IOCL: 1,147 descriptions match after whitespace trimming; 45 additional matches after stripping punctuation at both ends; 32 unmatched descriptions. A length filter is a hypothesis, not a verified cause.
+  - NTPC vs. IOCL: zero shared descriptions under the implemented normalization; this does not establish disjoint domains or prove source provenance.
+
+## Phase 1C: Data QA and Human Review
+
+Reports use strict JSON (`null` for missing/non-finite values). Source-field
+coverage is measured; overlap is not treated as proof of record identity.
+Human validation is pending. Raw CSVs and the original review sheet are preserved.
+
+The existing 400-row sheet is split into six files in `reports/review_batches/`
+(67, 67, 67, 67, 66, 66 rows). Assign one file to each reviewer and follow
+[LABELING_GUIDE.md](LABELING_GUIDE.md). Edit only the three human-review columns.
+All source fields and IDs must remain unchanged. Reviewers should save CSV as UTF-8.
+
+```powershell
+# Optional: reproduce blank batches into a NEW directory; never overwrites reviews
+py review_classification.py split --output-dir reports/review_batches_new
+
+# Validate all six returned files, combine in original order, and evaluate labels
+$reviewFiles = (Get-ChildItem reports/review_batches/review_*.csv).FullName
+py review_classification.py combine --output-dir reports/review_results @reviewFiles
+
+# Focused QA tests
+py -m unittest discover -s tests -v
+py verify_raw_data.py
+```
+
+The combine command writes `classification_review_combined.csv` and
+`review_metrics.json` into a new directory; it refuses existing output directories.
+It rejects invalid labels, invalid usability values, changed source fields,
+duplicate/unknown IDs, missing IDs, and changes to existing reference annotations.
+With no labels it reports `awaiting_labels` and no metrics. With partial labels,
+precision and recall use only labeled rows and are marked partial. Undefined
+ratios are `null`. Results describe this stratified sample, not full-corpus
+performance. No overall accuracy is reported. `reviewer_note` is optional;
+`usable_for_matching` completion is counted separately from classification labels.

@@ -1,18 +1,18 @@
 # SIH 26099: Phase 1B Material Candidate Curation & Classification Audit Report
 
-> **Dataset Foundation:** [Prasenjeet25/sih26099-cpse-material-codes](https://huggingface.co/datasets/Prasenjeet25/sih26099-cpse-material-codes)  
-> **Scope:** Phase 1B Material Validation, Overlap Audit & Stratified Review Sample  
-> **Generated At:** 2026-09-27T10:16:59.967417  
+> **Dataset Foundation:** [Prasenjeet25/sih26099-cpse-material-codes](https://huggingface.co/datasets/Prasenjeet25/sih26099-cpse-material-codes)
+> **Scope:** Phase 1B Material Validation, Overlap Audit & Stratified Review Sample
+> **Generated At:** 2026-09-27T11:35:04.568165
 
 ## 1. Executive Summary
 
-In Phase 1B, the classification heuristics were validated across boundary cases and applied to isolate a **provisional working dataset of individual material candidates** (`data/processed/material_candidates.csv`). 
-Crucially, all original raw records remain untouched in `data/raw/huggingface/`. 
+In Phase 1B, the classification heuristics were applied (human validation is pending) to isolate a **provisional working dataset of individual material candidates** (`data/processed/material_candidates.csv`).
+Crucially, all original raw records remain untouched in `data/raw/huggingface/`.
 A stratified human review sample of **400 records** (`reports/classification_review.csv`) has been produced alongside a standardized labeling guide (`LABELING_GUIDE.md`).
 
 ### Key Deliverable Figures:
-- **Provisional Material Candidates:** **9,245** rows (42.97% of main corpus)
-- **Stratified Review Sample:** **400** rows across all 3 CPSEs and 7 boundary conditions
+- **Provisional Material Candidates:** **9,245** rows
+- **Stratified Review Sample:** **400** rows across 3 organisations
 - **Candidates with Technical Details:** **2,911** rows (31.49%)
 
 ---
@@ -94,8 +94,8 @@ A stratified set of **400** records was compiled for human review, incorporating
 | `boundary:engineering_standard` | 39 | Validation of category boundaries |
 | `boundary:supply_and_installation` | 28 | Validation of category boundaries |
 | `boundary:amc_or_maintenance_of_equipment` | 27 | Validation of category boundaries |
-| `boundary:administrative_notice` | 24 | Validation of category boundaries |
 | `boundary:short_or_numeric` | 24 | Validation of category boundaries |
+| `boundary:administrative_notice` | 24 | Validation of category boundaries |
 | `boundary:turnkey_epc_package` | 20 | Validation of category boundaries |
 | `boundary:service_utility_system` | 7 | Validation of category boundaries |
 
@@ -106,26 +106,44 @@ A stratified set of **400** records was compiled for human review, incorporating
 ### 4.1 NTPC Material Items Overlap
 - **Total Rows in File:** `486`
 - **Exact Matches:** `462` (95.06%)
-- **Matches after trailing punctuation strip:** `24` (4.94%)
-- **Genuinely New Records:** `0` (0.0%)
-- **Conclusion:** 100% of NTPC items (462 verbatim + 24 with trailing punctuation) have direct source provenance in the corpus. Zero genuinely new records were omitted.
+- **Additional matches after stripping punctuation at both ends:** `24` (4.94%)
+- **Unmatched Descriptions:** `0` (0.0%)
+- **Conclusion:** 462 descriptions match after whitespace trimming; 24 additional descriptions match after stripping whitespace and |:.- from both ends; 0 have no match under these comparisons. Description overlap does not establish record identity or source provenance.
 
 ### 4.2 IOCL Procurement Plan Items Overlap
 - **Total Rows in File:** `1224`
 - **Exact Matches:** `1147` (93.71%)
-- **Matches after trailing punctuation strip:** `45` (3.68%)
-- **Genuinely New Records:** `32` (2.61%)
-- **Conclusion:** Exactly 32 records (2.61%) were excluded from the corpus purely because their description string length was < 8 characters (e.g. 'Boiler', 'Valves', 'Filters', 'GC-FID'). These are valid item lines with quantities and budget figures.
+- **Additional matches after stripping punctuation at both ends:** `45` (3.68%)
+- **Unmatched Descriptions:** `32` (2.61%)
+- **Conclusion:** 1147 descriptions match after whitespace trimming; 45 additional descriptions match after stripping whitespace and |:.- from both ends; 32 have no match under these comparisons. Description overlap does not establish record identity or source provenance.
 
 ### 4.3 Cross-File Overlap (NTPC vs. IOCL)
-- **Verbatim Common Descriptions:** `0`
-- **Conclusion:** 0 common descriptions between NTPC and IOCL items; vocabularies represent distinct power vs refinery domains.
+- **Normalized Common Descriptions:** `0`
+- **Conclusion:** 0 shared descriptions after lowercasing and stripping whitespace and |:.- from both ends. This does not establish that the domains or vocabularies are disjoint.
 
 ---
 
 ## 5. Limitations & Surprising Examples
 
-1. **PDF Column Alignment Artifacts:** A small number of records (e.g. `1236/1231`) resulted from misaligned column headers in IOCL PDF tables. These are preserved in the raw data but isolated in `unclassified_or_other`.
-2. **Medical & Hospital Procurement in CPSEs:** Both Oil India and NTPC operate internal hospitals and townships. Records like `Haemodialysis Machine (Q2)` and `(1) TRANSPORE 5 CM` are genuine public procurement items published by these CPSEs, not scraping errors.
-3. **Incidental Installation Clauses:** Descriptions such as `Procurement & Installation of 98 Inch Display System` represent physical assets where installation is secondary. Our refined rules classify them as individual materials while routing turnkey capital packages (`EPC Package for Battery Storage`) to `broad_tender_package`.
-4. **Character Cutoff Boundary:** Exactly 32 valid IOCL procurement plan records (e.g. `Boiler`, `Valves`, `Filters`, `DG Set`, `GC-FID`) were omitted from the main corpus table purely due to the upstream 8-character filter. Downstream models should ingest these directly from `iocl_procurement_plan_items.csv`.
+- Classification and technical-detail flags are heuristic; human validation is pending.
+- 32 unmatched IOCL descriptions have fewer than eight characters after whitespace trimming.
+- **Hypothesis:** An upstream length filter may explain short unmatched descriptions; this local comparison does not verify the extraction logic or suitability of those records.
+- Numeric fragments and medical descriptions require source review; their cause or validity cannot be established from wording alone.
+
+## 6. Measured Source-Field Coverage
+Counts of nonempty source fields; no external URL validation or cross-file identity proof.
+
+| Dataset | Field | Nonempty rows | Total rows |
+|---|---|---:|---:|
+| corpus | corpus_id | 21513 | 21513 |
+| corpus | source_url | 20534 | 21513 |
+| corpus | document_url | 4375 | 21513 |
+| corpus | tender_reference | 20557 | 21513 |
+| corpus | tender_id | 2055 | 21513 |
+| ntpc | nit_id | 486 | 486 |
+| ntpc | doc_name | 486 | 486 |
+| ntpc | line_no | 486 | 486 |
+| iocl | source_pdf | 1224 | 1224 |
+| iocl | page | 1224 | 1224 |
+| iocl | section | 74 | 1224 |
+| iocl | sl_no | 1224 | 1224 |

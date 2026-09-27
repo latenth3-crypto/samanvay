@@ -13,6 +13,7 @@ import hashlib
 from typing import Dict, Any, List
 import pandas as pd
 import numpy as np
+from curate_material_candidates import audit_overlap_deep, strict_json_value
 
 DEFAULT_DATA_DIR = os.path.join("data", "raw", "huggingface")
 DEFAULT_REPORTS_DIR = "reports"
@@ -346,7 +347,7 @@ def analyze_overlap(corpus_df: pd.DataFrame, ntpc_df: pd.DataFrame, iocl_df: pd.
             "ntpc_unique_matching_corpus_desc": ntpc_unique_in_corpus,
             "ntpc_match_percentage": round((ntpc_in_corpus_count / len(ntpc_df)) * 100, 2),
             "corpus_doc_extracted_rows": len(corpus_ntpc_doc_items),
-            "notes": "NTPC items were filtered (length 8-1200 chars) and deduplicated by (organization, description, description_kind) during corpus construction, resulting in 448 doc_* records in the main corpus."
+            "notes": "Counts reflect whitespace-trimmed description equality and corpus description_kind values; upstream filtering and record identity are not verified."
         },
         "iocl_in_corpus": {
             "iocl_file_rows": len(iocl_df),
@@ -355,20 +356,14 @@ def analyze_overlap(corpus_df: pd.DataFrame, ntpc_df: pd.DataFrame, iocl_df: pd.
             "iocl_unique_matching_corpus_desc": iocl_unique_in_corpus,
             "iocl_match_percentage": round((iocl_in_corpus_count / len(iocl_df)) * 100, 2),
             "corpus_procurement_plan_rows": len(corpus_iocl_plan_items),
-            "notes": "IOCL Procurement Plan items (1,224 rows) contain repeated standard categories across units. When filtered (length 8-1200 chars) and deduplicated by (organization, description, description_kind), exactly 508 unique procurement plan items entered the main corpus."
+            "notes": "Counts reflect whitespace-trimmed description equality and corpus description_kind values; upstream filtering and deduplication causes are not verified."
         },
         "cross_file_ntpc_vs_iocl": {
             "common_descriptions_count": len(ntpc_iocl_common),
             "common_samples": list(ntpc_iocl_common)[:5],
-            "notes": "Zero intersection between NTPC items and IOCL procurement items; domain vocabularies reflect power generation vs petroleum refining."
+            "notes": "Intersection uses lowercased, whitespace-trimmed descriptions; it does not measure semantic or domain overlap."
         },
-        "provenance_audit": {
-            "source_url_preserved": "source_url column present in corpus and raw files",
-            "document_url_preserved": "document_url column present in corpus, pointing to source PDFs/NITs",
-            "organization_preserved": "organization present across all corpus rows and traceable in child datasets",
-            "identifiers_preserved": ["corpus_id", "tender_reference", "tender_id", "nit_id", "doc_name", "line_no", "page", "section", "sl_no"],
-            "ground_truth_policy": "Strict adherence to Phase 1 rules: No invented CPSE codes, no synthetic ground-truth pairs, and no unverified accuracy metrics."
-        }
+        "provenance_audit": audit_overlap_deep(corpus_df, ntpc_df, iocl_df)["provenance_coverage"]
     }
 
 def generate_sample_records_csv(corpus_df: pd.DataFrame, ntpc_df: pd.DataFrame, iocl_df: pd.DataFrame, out_path: str):
@@ -612,15 +607,19 @@ def generate_markdown_report(profile_data: Dict[str, Any], out_path: str):
     md.append("")
     md.append(f"- **Total Raw Rows across the 3 files:** `{overlap['total_raw_rows_all_files']:,}`  ")
     md.append(f"- **Global Unique Descriptions:** `{overlap['global_unique_descriptions']:,}`  ")
-    md.append(f"- **NTPC items in Main Corpus:** `{overlap['ntpc_in_corpus']['ntpc_rows_matching_corpus_desc']:,}` of `{overlap['ntpc_in_corpus']['ntpc_file_rows']:,}` ({overlap['ntpc_in_corpus']['ntpc_match_percentage']}%) match corpus descriptions directly. The corpus contains **{overlap['ntpc_in_corpus']['corpus_doc_extracted_rows']}** deduplicated `doc_*` rows originating from NTPC tender PDFs.  ")
-    md.append(f"- **IOCL Procurement Plan items in Main Corpus:** `{overlap['iocl_in_corpus']['iocl_rows_matching_corpus_desc']:,}` of `{overlap['iocl_in_corpus']['iocl_file_rows']:,}` ({overlap['iocl_in_corpus']['iocl_match_percentage']}%) match corpus descriptions directly. The corpus contains **{overlap['iocl_in_corpus']['corpus_procurement_plan_rows']}** deduplicated `procurement_plan_item` records.  ")
-    md.append(f"- **Direct Cross-Intersection (NTPC vs. IOCL):** Exactly **{overlap['cross_file_ntpc_vs_iocl']['common_descriptions_count']}** common descriptions. NTPC power generation items and IOCL refinery items share zero verbatim descriptions.  ")
+    md.append(f"- **NTPC items in Main Corpus:** `{overlap['ntpc_in_corpus']['ntpc_rows_matching_corpus_desc']:,}` of `{overlap['ntpc_in_corpus']['ntpc_file_rows']:,}` ({overlap['ntpc_in_corpus']['ntpc_match_percentage']}%) match corpus descriptions directly. The corpus contains **{overlap['ntpc_in_corpus']['corpus_doc_extracted_rows']}** rows whose description_kind starts with `doc_`.  ")
+    md.append(f"- **IOCL Procurement Plan items in Main Corpus:** `{overlap['iocl_in_corpus']['iocl_rows_matching_corpus_desc']:,}` of `{overlap['iocl_in_corpus']['iocl_file_rows']:,}` ({overlap['iocl_in_corpus']['iocl_match_percentage']}%) match corpus descriptions directly. The corpus contains **{overlap['iocl_in_corpus']['corpus_procurement_plan_rows']}** rows with description_kind `procurement_plan_item`.  ")
+    md.append(f"- **Direct Cross-Intersection (NTPC vs. IOCL):** Exactly **{overlap['cross_file_ntpc_vs_iocl']['common_descriptions_count']}** common descriptions after lowercasing and trimming whitespace; this is not a semantic overlap test.  ")
     md.append("")
     md.append("### 5.2 Provenance & Ground-Truth Integrity")
     md.append("")
-    md.append("- **URL & Document Links:** Fully preserved across all tables (`source_url`, `document_url`).")
-    md.append("- **Original Identifiers:** Stable identifiers preserved including `corpus_id`, `tender_reference`, `tender_id`, `nit_id`, `doc_name`, `line_no`, `page`, `section`, and `sl_no`.")
-    md.append("- **Integrity Guarantee:** In accordance with Phase 1 constraints, **no synthetic CPSE codes, ground-truth matches, or hypothetical accuracy scores have been invented**.")
+    md.append(overlap["provenance_audit"]["method"])
+    md.append("")
+    md.append("| Dataset | Field | Nonempty rows | Total rows |")
+    md.append("|---|---|---:|---:|")
+    for dataset in ("corpus", "ntpc", "iocl"):
+        for field, counts in overlap["provenance_audit"][dataset].items():
+            md.append(f"| {dataset} | {field} | {counts['nonempty_rows']} | {counts['total_rows']} |")
     md.append("")
     md.append("---")
     md.append("")
@@ -632,7 +631,7 @@ def generate_markdown_report(profile_data: Dict[str, Any], out_path: str):
 
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(md))
+        f.write("\n".join(line.rstrip() for line in md) + "\n")
     print(f"Wrote markdown report to {out_path}")
 
 def main():
@@ -681,7 +680,7 @@ def main():
 
     json_path = os.path.join(reports_dir, "data_profile.json")
     with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(profile_data, f, indent=2, ensure_ascii=False)
+        json.dump(strict_json_value(profile_data), f, indent=2, ensure_ascii=False, allow_nan=False)
     print(f"Wrote JSON profile to {json_path}")
 
     md_path = os.path.join(reports_dir, "data_profile.md")

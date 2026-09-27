@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-27T10:16:30.135690",
+  "generated_at": "2026-09-27T11:38:11.042656",
   "dataset_source": "https://huggingface.co/datasets/Prasenjeet25/sih26099-cpse-material-codes",
   "license": "cc-by-4.0",
   "files": {
@@ -33,77 +33,77 @@
         "corpus_id": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "organization": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "source_system": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "source_section": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "tender_reference": {
           "null_or_empty_count": 956,
           "null_or_empty_percentage": 4.44,
-          "dtype": "object"
+          "dtype": "str"
         },
         "tender_id": {
           "null_or_empty_count": 19458,
           "null_or_empty_percentage": 90.45,
-          "dtype": "object"
+          "dtype": "str"
         },
         "description": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "description_kind": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "item_type_hint": {
           "null_or_empty_count": 15164,
           "null_or_empty_percentage": 70.49,
-          "dtype": "object"
+          "dtype": "str"
         },
         "quantity": {
           "null_or_empty_count": 21029,
           "null_or_empty_percentage": 97.75,
-          "dtype": "object"
+          "dtype": "str"
         },
         "unit": {
           "null_or_empty_count": 21116,
           "null_or_empty_percentage": 98.15,
-          "dtype": "object"
+          "dtype": "str"
         },
         "location": {
           "null_or_empty_count": 12231,
           "null_or_empty_percentage": 56.85,
-          "dtype": "object"
+          "dtype": "str"
         },
         "product_category": {
           "null_or_empty_count": 8755,
           "null_or_empty_percentage": 40.7,
-          "dtype": "object"
+          "dtype": "str"
         },
         "document_url": {
           "null_or_empty_count": 17138,
           "null_or_empty_percentage": 79.66,
-          "dtype": "object"
+          "dtype": "str"
         },
         "source_url": {
           "null_or_empty_count": 979,
           "null_or_empty_percentage": 4.55,
-          "dtype": "object"
+          "dtype": "str"
         }
       },
       "exact_duplicate_rows": 0,
@@ -287,37 +287,37 @@
         "nit_id": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "doc_name": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "pattern": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "item_text": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "quantity": {
           "null_or_empty_count": 486,
           "null_or_empty_percentage": 100.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "unit": {
           "null_or_empty_count": 486,
           "null_or_empty_percentage": 100.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "line_no": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         }
       },
       "exact_duplicate_rows": 0,
@@ -414,47 +414,47 @@
         "page": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "section": {
           "null_or_empty_count": 1150,
           "null_or_empty_percentage": 93.95,
-          "dtype": "object"
+          "dtype": "str"
         },
         "sl_no": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "item_description": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "quantity": {
           "null_or_empty_count": 101,
           "null_or_empty_percentage": 8.25,
-          "dtype": "object"
+          "dtype": "str"
         },
         "unit": {
           "null_or_empty_count": 296,
           "null_or_empty_percentage": 24.18,
-          "dtype": "object"
+          "dtype": "str"
         },
         "estimated_value_rs_crores": {
           "null_or_empty_count": 295,
           "null_or_empty_percentage": 24.1,
-          "dtype": "object"
+          "dtype": "str"
         },
         "row_raw": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         },
         "source_pdf": {
           "null_or_empty_count": 0,
           "null_or_empty_percentage": 0.0,
-          "dtype": "object"
+          "dtype": "str"
         }
       },
       "exact_duplicate_rows": 0,
@@ -865,7 +865,7 @@
       "ntpc_unique_matching_corpus_desc": 423,
       "ntpc_match_percentage": 95.06,
       "corpus_doc_extracted_rows": 448,
-      "notes": "NTPC items were filtered (length 8-1200 chars) and deduplicated by (organization, description, description_kind) during corpus construction, resulting in 448 doc_* records in the main corpus."
+      "notes": "Counts reflect whitespace-trimmed description equality and corpus description_kind values; upstream filtering and record identity are not verified."
     },
     "iocl_in_corpus": {
       "iocl_file_rows": 1224,
@@ -874,29 +874,81 @@
       "iocl_unique_matching_corpus_desc": 485,
       "iocl_match_percentage": 93.71,
       "corpus_procurement_plan_rows": 508,
-      "notes": "IOCL Procurement Plan items (1,224 rows) contain repeated standard categories across units. When filtered (length 8-1200 chars) and deduplicated by (organization, description, description_kind), exactly 508 unique procurement plan items entered the main corpus."
+      "notes": "Counts reflect whitespace-trimmed description equality and corpus description_kind values; upstream filtering and deduplication causes are not verified."
     },
     "cross_file_ntpc_vs_iocl": {
       "common_descriptions_count": 0,
       "common_samples": [],
-      "notes": "Zero intersection between NTPC items and IOCL procurement items; domain vocabularies reflect power generation vs petroleum refining."
+      "notes": "Intersection uses lowercased, whitespace-trimmed descriptions; it does not measure semantic or domain overlap."
     },
     "provenance_audit": {
-      "source_url_preserved": "source_url column present in corpus and raw files",
-      "document_url_preserved": "document_url column present in corpus, pointing to source PDFs/NITs",
-      "organization_preserved": "organization present across all corpus rows and traceable in child datasets",
-      "identifiers_preserved": [
-        "corpus_id",
-        "tender_reference",
-        "tender_id",
-        "nit_id",
-        "doc_name",
-        "line_no",
-        "page",
-        "section",
-        "sl_no"
-      ],
-      "ground_truth_policy": "Strict adherence to Phase 1 rules: No invented CPSE codes, no synthetic ground-truth pairs, and no unverified accuracy metrics."
+      "method": "Counts of nonempty source fields; no external URL validation or cross-file identity proof.",
+      "corpus": {
+        "corpus_id": {
+          "column_present": true,
+          "nonempty_rows": 21513,
+          "total_rows": 21513
+        },
+        "source_url": {
+          "column_present": true,
+          "nonempty_rows": 20534,
+          "total_rows": 21513
+        },
+        "document_url": {
+          "column_present": true,
+          "nonempty_rows": 4375,
+          "total_rows": 21513
+        },
+        "tender_reference": {
+          "column_present": true,
+          "nonempty_rows": 20557,
+          "total_rows": 21513
+        },
+        "tender_id": {
+          "column_present": true,
+          "nonempty_rows": 2055,
+          "total_rows": 21513
+        }
+      },
+      "ntpc": {
+        "nit_id": {
+          "column_present": true,
+          "nonempty_rows": 486,
+          "total_rows": 486
+        },
+        "doc_name": {
+          "column_present": true,
+          "nonempty_rows": 486,
+          "total_rows": 486
+        },
+        "line_no": {
+          "column_present": true,
+          "nonempty_rows": 486,
+          "total_rows": 486
+        }
+      },
+      "iocl": {
+        "source_pdf": {
+          "column_present": true,
+          "nonempty_rows": 1224,
+          "total_rows": 1224
+        },
+        "page": {
+          "column_present": true,
+          "nonempty_rows": 1224,
+          "total_rows": 1224
+        },
+        "section": {
+          "column_present": true,
+          "nonempty_rows": 74,
+          "total_rows": 1224
+        },
+        "sl_no": {
+          "column_present": true,
+          "nonempty_rows": 1224,
+          "total_rows": 1224
+        }
+      }
     }
   }
 }

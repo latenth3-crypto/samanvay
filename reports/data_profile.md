@@ -1,13 +1,13 @@
 # SIH 26099: Phase 1 Data Profiling & Quality Assessment Report
 
-> **Dataset Source:** [Prasenjeet25/sih26099-cpse-material-codes](https://huggingface.co/datasets/Prasenjeet25/sih26099-cpse-material-codes)  
-> **Stated License:** CC-BY-4.0  
-> **Profile Generated:** 2026-09-27T10:16:30.135690  
+> **Dataset Source:** [Prasenjeet25/sih26099-cpse-material-codes](https://huggingface.co/datasets/Prasenjeet25/sih26099-cpse-material-codes)
+> **Stated License:** CC-BY-4.0
+> **Profile Generated:** 2026-09-27T11:38:11.042656
 
 ## 1. Executive Summary & Headline Metrics
 
-This report establishes the Phase 1 dataset foundation for the **AI-Driven Standardization & Harmonization of Material Codes Across CPSEs** (SIH26099). 
-In strict conformance with Phase 1 boundaries, no matching models, APIs, databases, or synthetic ground-truth codes are constructed. 
+This report establishes the Phase 1 dataset foundation for the **AI-Driven Standardization & Harmonization of Material Codes Across CPSEs** (SIH26099).
+In strict conformance with Phase 1 boundaries, no matching models, APIs, databases, or synthetic ground-truth codes are constructed.
 Three primary extracted item datasets were downloaded, verified, and profiled:
 
 | File Name | Role / Description | Rows | Columns | Size | Exact Duplicates | Null / Empty Rates |
@@ -32,21 +32,21 @@ Three primary extracted item datasets were downloaded, verified, and profiled:
 
 | Column | Non-Empty Count | Missing / Empty | Missing % | Data Type |
 |---|---|---|---|---|
-| `corpus_id` | 21,513 | 0 | 0.0% | `object` |
-| `organization` | 21,513 | 0 | 0.0% | `object` |
-| `source_system` | 21,513 | 0 | 0.0% | `object` |
-| `source_section` | 21,513 | 0 | 0.0% | `object` |
-| `tender_reference` | 20,557 | 956 | 4.44% | `object` |
-| `tender_id` | 2,055 | 19,458 | 90.45% | `object` |
-| `description` | 21,513 | 0 | 0.0% | `object` |
-| `description_kind` | 21,513 | 0 | 0.0% | `object` |
-| `item_type_hint` | 6,349 | 15,164 | 70.49% | `object` |
-| `quantity` | 484 | 21,029 | 97.75% | `object` |
-| `unit` | 397 | 21,116 | 98.15% | `object` |
-| `location` | 9,282 | 12,231 | 56.85% | `object` |
-| `product_category` | 12,758 | 8,755 | 40.7% | `object` |
-| `document_url` | 4,375 | 17,138 | 79.66% | `object` |
-| `source_url` | 20,534 | 979 | 4.55% | `object` |
+| `corpus_id` | 21,513 | 0 | 0.0% | `str` |
+| `organization` | 21,513 | 0 | 0.0% | `str` |
+| `source_system` | 21,513 | 0 | 0.0% | `str` |
+| `source_section` | 21,513 | 0 | 0.0% | `str` |
+| `tender_reference` | 20,557 | 956 | 4.44% | `str` |
+| `tender_id` | 2,055 | 19,458 | 90.45% | `str` |
+| `description` | 21,513 | 0 | 0.0% | `str` |
+| `description_kind` | 21,513 | 0 | 0.0% | `str` |
+| `item_type_hint` | 6,349 | 15,164 | 70.49% | `str` |
+| `quantity` | 484 | 21,029 | 97.75% | `str` |
+| `unit` | 397 | 21,116 | 98.15% | `str` |
+| `location` | 9,282 | 12,231 | 56.85% | `str` |
+| `product_category` | 12,758 | 8,755 | 40.7% | `str` |
+| `document_url` | 4,375 | 17,138 | 79.66% | `str` |
+| `source_url` | 20,534 | 979 | 4.55% | `str` |
 
 **Organisations Represented:**
 
@@ -107,13 +107,13 @@ Three primary extracted item datasets were downloaded, verified, and profiled:
 
 | Column | Non-Empty Count | Missing / Empty | Missing % | Data Type |
 |---|---|---|---|---|
-| `nit_id` | 486 | 0 | 0.0% | `object` |
-| `doc_name` | 486 | 0 | 0.0% | `object` |
-| `pattern` | 486 | 0 | 0.0% | `object` |
-| `item_text` | 486 | 0 | 0.0% | `object` |
-| `quantity` | 0 | 486 | 100.0% | `object` |
-| `unit` | 0 | 486 | 100.0% | `object` |
-| `line_no` | 486 | 0 | 0.0% | `object` |
+| `nit_id` | 486 | 0 | 0.0% | `str` |
+| `doc_name` | 486 | 0 | 0.0% | `str` |
+| `pattern` | 486 | 0 | 0.0% | `str` |
+| `item_text` | 486 | 0 | 0.0% | `str` |
+| `quantity` | 0 | 486 | 100.0% | `str` |
+| `unit` | 0 | 486 | 100.0% | `str` |
+| `line_no` | 486 | 0 | 0.0% | `str` |
 
 **Description Kinds / Patterns:**
 
@@ -149,15 +149,15 @@ Three primary extracted item datasets were downloaded, verified, and profiled:
 
 | Column | Non-Empty Count | Missing / Empty | Missing % | Data Type |
 |---|---|---|---|---|
-| `page` | 1,224 | 0 | 0.0% | `object` |
-| `section` | 74 | 1,150 | 93.95% | `object` |
-| `sl_no` | 1,224 | 0 | 0.0% | `object` |
-| `item_description` | 1,224 | 0 | 0.0% | `object` |
-| `quantity` | 1,123 | 101 | 8.25% | `object` |
-| `unit` | 928 | 296 | 24.18% | `object` |
-| `estimated_value_rs_crores` | 929 | 295 | 24.1% | `object` |
-| `row_raw` | 1,224 | 0 | 0.0% | `object` |
-| `source_pdf` | 1,224 | 0 | 0.0% | `object` |
+| `page` | 1,224 | 0 | 0.0% | `str` |
+| `section` | 74 | 1,150 | 93.95% | `str` |
+| `sl_no` | 1,224 | 0 | 0.0% | `str` |
+| `item_description` | 1,224 | 0 | 0.0% | `str` |
+| `quantity` | 1,123 | 101 | 8.25% | `str` |
+| `unit` | 928 | 296 | 24.18% | `str` |
+| `estimated_value_rs_crores` | 929 | 295 | 24.1% | `str` |
+| `row_raw` | 1,224 | 0 | 0.0% | `str` |
+| `source_pdf` | 1,224 | 0 | 0.0% | `str` |
 
 **Description Kinds / Patterns:**
 
@@ -246,8 +246,8 @@ The corpus includes coarse classification hints across 34 industrial equipment v
 
 ### 4.1 Methodology & Filtering Rules
 
-To determine which rows represent discrete physical materials suitable for code harmonisation versus administrative titles or services, 
-an objective multi-stage classification hierarchy was evaluated. 
+To determine which rows represent discrete physical materials suitable for code harmonisation versus administrative titles or services,
+an objective multi-stage classification hierarchy was evaluated.
 **Crucially, no raw rows have been deleted or filtered out; all 21,513 raw records remain preserved.**
 
 1. **Rule 1 ? Administrative Notices:** Flags corrigenda, amendments, tender cancellations, pre-bid notices, or EOI notices lacking physical items.
@@ -285,17 +285,30 @@ an objective multi-stage classification hierarchy was evaluated.
 
 The three raw files represent different extraction stages. To prevent double-counting during downstream analysis, the overlap structure was explicitly audited:
 
-- **Total Raw Rows across the 3 files:** `23,223`  
-- **Global Unique Descriptions:** `17,459`  
-- **NTPC items in Main Corpus:** `462` of `486` (95.06%) match corpus descriptions directly. The corpus contains **448** deduplicated `doc_*` rows originating from NTPC tender PDFs.  
-- **IOCL Procurement Plan items in Main Corpus:** `1,147` of `1,224` (93.71%) match corpus descriptions directly. The corpus contains **508** deduplicated `procurement_plan_item` records.  
-- **Direct Cross-Intersection (NTPC vs. IOCL):** Exactly **0** common descriptions. NTPC power generation items and IOCL refinery items share zero verbatim descriptions.  
+- **Total Raw Rows across the 3 files:** `23,223`
+- **Global Unique Descriptions:** `17,459`
+- **NTPC items in Main Corpus:** `462` of `486` (95.06%) match corpus descriptions directly. The corpus contains **448** rows whose description_kind starts with `doc_`.
+- **IOCL Procurement Plan items in Main Corpus:** `1,147` of `1,224` (93.71%) match corpus descriptions directly. The corpus contains **508** rows with description_kind `procurement_plan_item`.
+- **Direct Cross-Intersection (NTPC vs. IOCL):** Exactly **0** common descriptions after lowercasing and trimming whitespace; this is not a semantic overlap test.
 
 ### 5.2 Provenance & Ground-Truth Integrity
 
-- **URL & Document Links:** Fully preserved across all tables (`source_url`, `document_url`).
-- **Original Identifiers:** Stable identifiers preserved including `corpus_id`, `tender_reference`, `tender_id`, `nit_id`, `doc_name`, `line_no`, `page`, `section`, and `sl_no`.
-- **Integrity Guarantee:** In accordance with Phase 1 constraints, **no synthetic CPSE codes, ground-truth matches, or hypothetical accuracy scores have been invented**.
+Counts of nonempty source fields; no external URL validation or cross-file identity proof.
+
+| Dataset | Field | Nonempty rows | Total rows |
+|---|---|---:|---:|
+| corpus | corpus_id | 21513 | 21513 |
+| corpus | source_url | 20534 | 21513 |
+| corpus | document_url | 4375 | 21513 |
+| corpus | tender_reference | 20557 | 21513 |
+| corpus | tender_id | 2055 | 21513 |
+| ntpc | nit_id | 486 | 486 |
+| ntpc | doc_name | 486 | 486 |
+| ntpc | line_no | 486 | 486 |
+| iocl | source_pdf | 1224 | 1224 |
+| iocl | page | 1224 | 1224 |
+| iocl | section | 74 | 1224 |
+| iocl | sl_no | 1224 | 1224 |
 
 ---
 

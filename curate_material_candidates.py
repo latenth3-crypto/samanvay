@@ -10,6 +10,7 @@ import json
 import re
 import argparse
 import hashlib
+import math
 from typing import Dict, Any, List, Tuple
 import pandas as pd
 import numpy as np
@@ -310,67 +311,68 @@ def build_review_sample(corpus_df: pd.DataFrame, target_size: int = 400) -> pd.D
     ]
     return df_out[cols]
 
+def strict_json_value(value):
+    """Map missing/non-finite numbers to null before strict JSON serialization."""
+    if isinstance(value, dict):
+        return {k: strict_json_value(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [strict_json_value(v) for v in value]
+    if isinstance(value, (float, np.floating)) and not math.isfinite(value):
+        return None
+    if value is pd.NA:
+        return None
+    return value
+
+
 def audit_overlap_deep(corpus_df: pd.DataFrame, ntpc_df: pd.DataFrame, iocl_df: pd.DataFrame) -> Dict[str, Any]:
-    corpus_exact_set = set(corpus_df["description"].dropna().str.strip())
-    corpus_stripped_set = set(corpus_df["description"].dropna().str.strip(" \t|:.-"))
+    corpus_exact = set(corpus_df["description"].dropna().str.strip())
+    corpus_normalized = set(corpus_df["description"].dropna().str.strip(" \t|:.-"))
 
-    # NTPC Audit
-    ntpc_total = len(ntpc_df)
-    ntpc_exact = int(ntpc_df["item_text"].dropna().str.strip().isin(corpus_exact_set).sum())
-    ntpc_stripped = ntpc_df["item_text"].dropna().str.strip(" \t|:.-")
-    ntpc_possible = int((ntpc_stripped.isin(corpus_stripped_set) & ~ntpc_df["item_text"].dropna().str.strip().isin(corpus_exact_set)).sum())
-    ntpc_genuinely_new = ntpc_total - ntpc_exact - ntpc_possible
+    def measure(frame, column):
+        descriptions = frame[column].fillna("")
+        exact = descriptions.str.strip().isin(corpus_exact) & descriptions.str.strip().ne("")
+        normalized = descriptions.str.strip(" \t|:.-").isin(corpus_normalized) & descriptions.str.strip().ne("")
+        additional = normalized & ~exact
+        unmatched = ~(exact | normalized)
+        total = len(frame)
+        counts = {"exact_overlap": int(exact.sum()), "possible_overlap": int(additional.sum()),
+                  "unmatched": int(unmatched.sum())}
+        result = {"total_records": total}
+        for name, count in counts.items():
+            result[name + "_count"] = count
+            result[name + "_pct"] = round(count / total * 100, 2) if total else None
+        result["finding"] = (f"{counts['exact_overlap']} descriptions match after whitespace trimming; "
+            f"{counts['possible_overlap']} additional descriptions match after stripping whitespace and |:.- from both ends; "
+            f"{counts['unmatched']} have no match under these comparisons. "
+            "Description overlap does not establish record identity or source provenance.")
+        return result, frame[unmatched]
 
-    # IOCL Audit
-    iocl_total = len(iocl_df)
-    iocl_exact = int(iocl_df["item_description"].dropna().str.strip().isin(corpus_exact_set).sum())
-    iocl_stripped = iocl_df["item_description"].dropna().str.strip(" \t|:.-")
-    iocl_possible = int((iocl_stripped.isin(corpus_stripped_set) & ~iocl_df["item_description"].dropna().str.strip().isin(corpus_exact_set)).sum())
-    iocl_genuinely_new = iocl_total - iocl_exact - iocl_possible
+    ntpc, _ = measure(ntpc_df, "item_text")
+    iocl, unmatched = measure(iocl_df, "item_description")
+    iocl["unmatched_description_length_lt_8_count"] = int(unmatched["item_description"].fillna("").str.strip().str.len().lt(8).sum())
+    iocl["new_samples"] = unmatched[["item_description", "quantity", "unit", "estimated_value_rs_crores"]].drop_duplicates().head(10).to_dict(orient="records")
+    iocl["hypothesis"] = "An upstream length filter may explain short unmatched descriptions; this local comparison does not verify the extraction logic or suitability of those records."
+    ntpc_set = set(ntpc_df["item_text"].dropna().str.strip(" \t|:.-").str.lower()) - {""}
+    iocl_set = set(iocl_df["item_description"].dropna().str.strip(" \t|:.-").str.lower()) - {""}
+    common = sorted(ntpc_set & iocl_set)
 
-    # Cross file overlap
-    ntpc_items_set = set(ntpc_stripped.str.lower()) - {""}
-    iocl_items_set = set(iocl_stripped.str.lower()) - {""}
-    cross_overlap = list(ntpc_items_set.intersection(iocl_items_set))
+    def coverage(frame, columns):
+        return {column: {"column_present": column in frame,
+                         "nonempty_rows": int(frame[column].fillna("").astype(str).str.strip().ne("").sum()) if column in frame else 0,
+                         "total_rows": len(frame)} for column in columns}
 
-    # Genuinely new samples from IOCL
-    iocl_unmatched = iocl_df[~iocl_stripped.isin(corpus_stripped_set)]
-    new_samples = iocl_unmatched[["item_description", "quantity", "unit", "estimated_value_rs_crores"]].drop_duplicates().head(10).to_dict(orient="records")
-
-    return {
-        "ntpc_audit": {
-            "total_records": ntpc_total,
-            "exact_overlap_count": ntpc_exact,
-            "exact_overlap_pct": round((ntpc_exact / ntpc_total) * 100, 2),
-            "possible_overlap_count": ntpc_possible,
-            "possible_overlap_pct": round((ntpc_possible / ntpc_total) * 100, 2),
-            "genuinely_new_count": ntpc_genuinely_new,
-            "genuinely_new_pct": round((ntpc_genuinely_new / ntpc_total) * 100, 2),
-            "finding": "100% of NTPC items (462 verbatim + 24 with trailing punctuation) have direct source provenance in the corpus. Zero genuinely new records were omitted."
-        },
-        "iocl_audit": {
-            "total_records": iocl_total,
-            "exact_overlap_count": iocl_exact,
-            "exact_overlap_pct": round((iocl_exact / iocl_total) * 100, 2),
-            "possible_overlap_count": iocl_possible,
-            "possible_overlap_pct": round((iocl_possible / iocl_total) * 100, 2),
-            "genuinely_new_count": iocl_genuinely_new,
-            "genuinely_new_pct": round((iocl_genuinely_new / iocl_total) * 100, 2),
-            "new_samples": new_samples,
-            "finding": "Exactly 32 records (2.61%) were excluded from the corpus purely because their description string length was < 8 characters (e.g. 'Boiler', 'Valves', 'Filters', 'GC-FID'). These are valid item lines with quantities and budget figures."
-        },
-        "cross_file_overlap": {
-            "common_items_count": len(cross_overlap),
-            "common_items": cross_overlap,
-            "finding": "0 common descriptions between NTPC and IOCL items; vocabularies represent distinct power vs refinery domains."
-        },
-        "provenance_preservation": {
-            "source_urls_present": True,
-            "document_urls_present": True,
-            "identifiers_preserved": ["corpus_id", "tender_reference", "tender_id", "nit_id", "doc_name", "page", "section", "sl_no"],
-            "no_synthetic_codes": True
+    return strict_json_value({
+        "ntpc_audit": ntpc, "iocl_audit": iocl,
+        "cross_file_overlap": {"common_items_count": len(common), "common_items": common,
+            "finding": f"{len(common)} shared descriptions after lowercasing and stripping whitespace and |:.- from both ends. This does not establish that the domains or vocabularies are disjoint."},
+        "provenance_coverage": {
+            "method": "Counts of nonempty source fields; no external URL validation or cross-file identity proof.",
+            "corpus": coverage(corpus_df, ["corpus_id", "source_url", "document_url", "tender_reference", "tender_id"]),
+            "ntpc": coverage(ntpc_df, ["nit_id", "doc_name", "line_no"]),
+            "iocl": coverage(iocl_df, ["source_pdf", "page", "section", "sl_no"])
         }
-    }
+    })
+
 
 def generate_curation_report(
     candidates_df: pd.DataFrame,
@@ -388,13 +390,13 @@ def generate_curation_report(
     md.append("")
     md.append("## 1. Executive Summary")
     md.append("")
-    md.append("In Phase 1B, the classification heuristics were validated across boundary cases and applied to isolate a **provisional working dataset of individual material candidates** (`data/processed/material_candidates.csv`). ")
+    md.append("In Phase 1B, the classification heuristics were applied (human validation is pending) to isolate a **provisional working dataset of individual material candidates** (`data/processed/material_candidates.csv`). ")
     md.append("Crucially, all original raw records remain untouched in `data/raw/huggingface/`. ")
-    md.append("A stratified human review sample of **400 records** (`reports/classification_review.csv`) has been produced alongside a standardized labeling guide (`LABELING_GUIDE.md`).")
+    md.append(f"A stratified human review sample of **{len(sample_df)} records** (`reports/classification_review.csv`) has been produced alongside a standardized labeling guide (`LABELING_GUIDE.md`).")
     md.append("")
     md.append("### Key Deliverable Figures:")
-    md.append(f"- **Provisional Material Candidates:** **{total_candidates:,}** rows (42.97% of main corpus)")
-    md.append(f"- **Stratified Review Sample:** **{len(sample_df):,}** rows across all 3 CPSEs and 7 boundary conditions")
+    md.append(f"- **Provisional Material Candidates:** **{total_candidates:,}** rows")
+    md.append(f"- **Stratified Review Sample:** **{len(sample_df):,}** rows across {sample_df['organization'].nunique()} organisations")
     md.append(f"- **Candidates with Technical Details:** **{candidates_df['has_any_technical_details'].sum():,}** rows ({candidates_df['has_any_technical_details'].mean()*100:.2f}%)")
     md.append("")
     md.append("---")
@@ -474,33 +476,43 @@ def generate_curation_report(
     md.append("### 4.1 NTPC Material Items Overlap")
     md.append(f"- **Total Rows in File:** `{ntpc_a['total_records']}`")
     md.append(f"- **Exact Matches:** `{ntpc_a['exact_overlap_count']}` ({ntpc_a['exact_overlap_pct']}%)")
-    md.append(f"- **Matches after trailing punctuation strip:** `{ntpc_a['possible_overlap_count']}` ({ntpc_a['possible_overlap_pct']}%)")
-    md.append(f"- **Genuinely New Records:** `{ntpc_a['genuinely_new_count']}` ({ntpc_a['genuinely_new_pct']}%)")
+    md.append(f"- **Additional matches after stripping punctuation at both ends:** `{ntpc_a['possible_overlap_count']}` ({ntpc_a['possible_overlap_pct']}%)")
+    md.append(f"- **Unmatched Descriptions:** `{ntpc_a['unmatched_count']}` ({ntpc_a['unmatched_pct']}%)")
     md.append(f"- **Conclusion:** {ntpc_a['finding']}")
     md.append("")
     md.append("### 4.2 IOCL Procurement Plan Items Overlap")
     md.append(f"- **Total Rows in File:** `{iocl_a['total_records']}`")
     md.append(f"- **Exact Matches:** `{iocl_a['exact_overlap_count']}` ({iocl_a['exact_overlap_pct']}%)")
-    md.append(f"- **Matches after trailing punctuation strip:** `{iocl_a['possible_overlap_count']}` ({iocl_a['possible_overlap_pct']}%)")
-    md.append(f"- **Genuinely New Records:** `{iocl_a['genuinely_new_count']}` ({iocl_a['genuinely_new_pct']}%)")
+    md.append(f"- **Additional matches after stripping punctuation at both ends:** `{iocl_a['possible_overlap_count']}` ({iocl_a['possible_overlap_pct']}%)")
+    md.append(f"- **Unmatched Descriptions:** `{iocl_a['unmatched_count']}` ({iocl_a['unmatched_pct']}%)")
     md.append(f"- **Conclusion:** {iocl_a['finding']}")
     md.append("")
     md.append("### 4.3 Cross-File Overlap (NTPC vs. IOCL)")
-    md.append(f"- **Verbatim Common Descriptions:** `{overlap_audit['cross_file_overlap']['common_items_count']}`")
+    md.append(f"- **Normalized Common Descriptions:** `{overlap_audit['cross_file_overlap']['common_items_count']}`")
     md.append(f"- **Conclusion:** {overlap_audit['cross_file_overlap']['finding']}")
     md.append("")
     md.append("---")
     md.append("")
     md.append("## 5. Limitations & Surprising Examples")
     md.append("")
-    md.append("1. **PDF Column Alignment Artifacts:** A small number of records (e.g. `1236/1231`) resulted from misaligned column headers in IOCL PDF tables. These are preserved in the raw data but isolated in `unclassified_or_other`.")
-    md.append("2. **Medical & Hospital Procurement in CPSEs:** Both Oil India and NTPC operate internal hospitals and townships. Records like `Haemodialysis Machine (Q2)` and `(1) TRANSPORE 5 CM` are genuine public procurement items published by these CPSEs, not scraping errors.")
-    md.append("3. **Incidental Installation Clauses:** Descriptions such as `Procurement & Installation of 98 Inch Display System` represent physical assets where installation is secondary. Our refined rules classify them as individual materials while routing turnkey capital packages (`EPC Package for Battery Storage`) to `broad_tender_package`.")
-    md.append("4. **Character Cutoff Boundary:** Exactly 32 valid IOCL procurement plan records (e.g. `Boiler`, `Valves`, `Filters`, `DG Set`, `GC-FID`) were omitted from the main corpus table purely due to the upstream 8-character filter. Downstream models should ingest these directly from `iocl_procurement_plan_items.csv`.")
+    md.append("- Classification and technical-detail flags are heuristic; human validation is pending.")
+    md.append(f"- {iocl_a['unmatched_description_length_lt_8_count']} unmatched IOCL descriptions have fewer than eight characters after whitespace trimming.")
+    md.append(f"- **Hypothesis:** {iocl_a['hypothesis']}")
+    md.append("- Numeric fragments and medical descriptions require source review; their cause or validity cannot be established from wording alone.")
+    md.append("")
+    md.append("## 6. Measured Source-Field Coverage")
+    coverage = overlap_audit["provenance_coverage"]
+    md.append(coverage["method"])
+    md.append("")
+    md.append("| Dataset | Field | Nonempty rows | Total rows |")
+    md.append("|---|---|---:|---:|")
+    for dataset in ("corpus", "ntpc", "iocl"):
+        for field, counts in coverage[dataset].items():
+            md.append(f"| {dataset} | {field} | {counts['nonempty_rows']} | {counts['total_rows']} |")
 
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(md))
+        f.write("\n".join(line.rstrip() for line in md) + "\n")
     print(f"Wrote curation report to {out_path}")
 
 def main():
@@ -542,7 +554,11 @@ def main():
     print("Building stratified review sample (400 records)...")
     sample_df = build_review_sample(corpus_df, target_size=400)
     sample_out_p = os.path.join(args.reports_dir, "classification_review.csv")
-    sample_df.to_csv(sample_out_p, index=False, encoding="utf-8")
+    if os.path.exists(sample_out_p):
+        sample_df = pd.read_csv(sample_out_p, dtype=str, keep_default_na=False)
+        print("  -> Preserving existing review sheet (including human entries)")
+    else:
+        sample_df.to_csv(sample_out_p, index=False, encoding="utf-8")
     print(f"  -> Saved review sample: {sample_out_p} ({len(sample_df)} rows)")
 
     # 3. Produce Material Candidates (data/processed/material_candidates.csv)
@@ -582,7 +598,7 @@ def main():
 
     report_json_p = os.path.join(args.reports_dir, "curation_report.json")
     with open(report_json_p, "w", encoding="utf-8") as f:
-        json.dump({
+        json.dump(strict_json_value({
             "generated_at": pd.Timestamp.now().isoformat(),
             "candidate_count": len(cand_df),
             "review_sample_count": len(sample_df),
@@ -595,7 +611,7 @@ def main():
                 ]
             },
             "overlap_audit": overlap_audit
-        }, f, indent=2, ensure_ascii=False)
+        }), f, indent=2, ensure_ascii=False, allow_nan=False)
     print(f"  -> Saved curation JSON: {report_json_p}")
 
     print("\n=================================================================")
