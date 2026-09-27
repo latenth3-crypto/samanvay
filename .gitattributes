@@ -1,0 +1,2 @@
+# Raw source snapshots must retain their original bytes (including line endings).
+/data/raw/**/*.csv -text

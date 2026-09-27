@@ -44,6 +44,14 @@ Preserved byte-for-byte in their original raw format:
 
 See [SOURCES.md](SOURCES.md) for full licensing details (CC-BY-4.0), download URLs, SHA-256 hashes, and provenance notes.
 
+Raw CSVs are marked `-text` in `.gitattributes` so Git preserves their original
+line endings: CRLF for NTPC and IOCL, LF for the main corpus. Verify the downloaded
+or checked-out bytes with `py verify_raw_data.py` (no dependencies required).
+Use `py verify_raw_data.py --git-ref HEAD` to check the committed bytes, or
+`py verify_raw_data.py --git-ref :0` to check the staged bytes before committing.
+The preservation rule and restored raw CSVs must be committed together; adding
+the rule alone does not repair older Git blobs.
+
 ### B. Curated Working Dataset (`data/processed/`)
 - **`data/processed/material_candidates.csv`**: **9,245** provisional individual material records isolated from the main corpus. Each record is enriched with derived major item categories (14 industrial domains) and audited for 6 discrete technical detail dimensions (size, material grade, engineering standard, voltage, pressure class, model/part number).
 
