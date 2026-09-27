@@ -1,0 +1,135 @@
+{
+  "generated_at": "2026-09-27T10:17:00.006577",
+  "candidate_count": 9245,
+  "review_sample_count": 400,
+  "major_item_categories": {
+    "General / Unspecified Material": 2438,
+    "Pipes, Tubes & Casings": 1200,
+    "Electrical, Cables & Switchgear": 1138,
+    "Chemicals, Catalysts & Lubricants": 1072,
+    "Pumps & Pumping Systems": 510,
+    "Structural Steel & Fasteners": 467,
+    "Valves & Actuators": 440,
+    "Tanks, Pressure Vessels & Heat Transfer": 347,
+    "Instrumentation & Automation": 339,
+    "Pipe Fittings & Flanges": 338,
+    "Rotating Equipment, Turbines & Compressors": 277,
+    "Safety, PPE & Workshop Tools": 249,
+    "Drilling, Downhole & Wellhead": 194,
+    "IT, Telecom & Office Equipment": 167,
+    "Gaskets, Seals & Packings": 69
+  },
+  "technical_details_breakdown": {
+    "has_size_or_dimension": 1219,
+    "has_material_grade": 143,
+    "has_engineering_standard": 513,
+    "has_voltage_or_electrical_rating": 683,
+    "has_pressure_class_or_rating": 158,
+    "has_model_or_catalog_number": 768,
+    "has_any_technical_details": 2911
+  },
+  "overlap_audit": {
+    "ntpc_audit": {
+      "total_records": 486,
+      "exact_overlap_count": 462,
+      "exact_overlap_pct": 95.06,
+      "possible_overlap_count": 24,
+      "possible_overlap_pct": 4.94,
+      "genuinely_new_count": 0,
+      "genuinely_new_pct": 0.0,
+      "finding": "100% of NTPC items (462 verbatim + 24 with trailing punctuation) have direct source provenance in the corpus. Zero genuinely new records were omitted."
+    },
+    "iocl_audit": {
+      "total_records": 1224,
+      "exact_overlap_count": 1147,
+      "exact_overlap_pct": 93.71,
+      "possible_overlap_count": 45,
+      "possible_overlap_pct": 3.68,
+      "genuinely_new_count": 32,
+      "genuinely_new_pct": 2.61,
+      "new_samples": [
+        {
+          "item_description": "Filters",
+          "quantity": NaN,
+          "unit": "Nos.",
+          "estimated_value_rs_crores": NaN
+        },
+        {
+          "item_description": "Driers",
+          "quantity": NaN,
+          "unit": "Nos.",
+          "estimated_value_rs_crores": NaN
+        },
+        {
+          "item_description": "Boiler",
+          "quantity": NaN,
+          "unit": "Nos.",
+          "estimated_value_rs_crores": NaN
+        },
+        {
+          "item_description": "Service",
+          "quantity": "2",
+          "unit": "No.",
+          "estimated_value_rs_crores": "0.70"
+        },
+        {
+          "item_description": "Service",
+          "quantity": "2",
+          "unit": "No.",
+          "estimated_value_rs_crores": "0.71"
+        },
+        {
+          "item_description": "Filters",
+          "quantity": NaN,
+          "unit": NaN,
+          "estimated_value_rs_crores": NaN
+        },
+        {
+          "item_description": "Driers",
+          "quantity": NaN,
+          "unit": NaN,
+          "estimated_value_rs_crores": NaN
+        },
+        {
+          "item_description": "Boiler",
+          "quantity": NaN,
+          "unit": NaN,
+          "estimated_value_rs_crores": NaN
+        },
+        {
+          "item_description": "Service",
+          "quantity": "2",
+          "unit": "No.",
+          "estimated_value_rs_crores": "0.75"
+        },
+        {
+          "item_description": "Filters",
+          "quantity": "11",
+          "unit": "Nos.",
+          "estimated_value_rs_crores": "3"
+        }
+      ],
+      "finding": "Exactly 32 records (2.61%) were excluded from the corpus purely because their description string length was < 8 characters (e.g. 'Boiler', 'Valves', 'Filters', 'GC-FID'). These are valid item lines with quantities and budget figures."
+    },
+    "cross_file_overlap": {
+      "common_items_count": 0,
+      "common_items": [],
+      "finding": "0 common descriptions between NTPC and IOCL items; vocabularies represent distinct power vs refinery domains."
+    },
+    "provenance_preservation": {
+      "source_urls_present": true,
+      "document_urls_present": true,
+      "identifiers_preserved": [
+        "corpus_id",
+        "tender_reference",
+        "tender_id",
+        "nit_id",
+        "doc_name",
+        "page",
+        "section",
+        "sl_no"
+      ],
+      "no_synthetic_codes": true
+    }
+  }
+}

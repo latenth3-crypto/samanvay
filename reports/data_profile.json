@@ -1,0 +1,902 @@
+{
+  "generated_at": "2026-09-27T10:16:30.135690",
+  "dataset_source": "https://huggingface.co/datasets/Prasenjeet25/sih26099-cpse-material-codes",
+  "license": "cc-by-4.0",
+  "files": {
+    "corpus": {
+      "key": "corpus",
+      "filename": "material_description_corpus.csv",
+      "label": "Material Description Corpus (Main Table)",
+      "file_size_bytes": 6257252,
+      "file_size_kb": 6110.6,
+      "sha256": "58c837ff0dab3336085bc6e7e984d7ed060b175a7df7440ba3dc037d7f107c95",
+      "row_count": 21513,
+      "column_count": 15,
+      "columns": [
+        "corpus_id",
+        "organization",
+        "source_system",
+        "source_section",
+        "tender_reference",
+        "tender_id",
+        "description",
+        "description_kind",
+        "item_type_hint",
+        "quantity",
+        "unit",
+        "location",
+        "product_category",
+        "document_url",
+        "source_url"
+      ],
+      "missing_values": {
+        "corpus_id": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "organization": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "source_system": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "source_section": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "tender_reference": {
+          "null_or_empty_count": 956,
+          "null_or_empty_percentage": 4.44,
+          "dtype": "object"
+        },
+        "tender_id": {
+          "null_or_empty_count": 19458,
+          "null_or_empty_percentage": 90.45,
+          "dtype": "object"
+        },
+        "description": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "description_kind": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "item_type_hint": {
+          "null_or_empty_count": 15164,
+          "null_or_empty_percentage": 70.49,
+          "dtype": "object"
+        },
+        "quantity": {
+          "null_or_empty_count": 21029,
+          "null_or_empty_percentage": 97.75,
+          "dtype": "object"
+        },
+        "unit": {
+          "null_or_empty_count": 21116,
+          "null_or_empty_percentage": 98.15,
+          "dtype": "object"
+        },
+        "location": {
+          "null_or_empty_count": 12231,
+          "null_or_empty_percentage": 56.85,
+          "dtype": "object"
+        },
+        "product_category": {
+          "null_or_empty_count": 8755,
+          "null_or_empty_percentage": 40.7,
+          "dtype": "object"
+        },
+        "document_url": {
+          "null_or_empty_count": 17138,
+          "null_or_empty_percentage": 79.66,
+          "dtype": "object"
+        },
+        "source_url": {
+          "null_or_empty_count": 979,
+          "null_or_empty_percentage": 4.55,
+          "dtype": "object"
+        }
+      },
+      "exact_duplicate_rows": 0,
+      "unique_descriptions": 17400,
+      "duplicate_descriptions": 4113,
+      "organisations": {
+        "Oil India Limited": {
+          "count": 18950,
+          "percentage": 88.09
+        },
+        "NTPC Limited": {
+          "count": 1843,
+          "percentage": 8.57
+        },
+        "Indian Oil Corporation Limited": {
+          "count": 720,
+          "percentage": 3.35
+        }
+      },
+      "description_kinds": {
+        "historical_tender": {
+          "count": 11183,
+          "percentage": 51.98
+        },
+        "tender_detail": {
+          "count": 3867,
+          "percentage": 17.98
+        },
+        "archived_tender": {
+          "count": 3739,
+          "percentage": 17.38
+        },
+        "nit_brief_description": {
+          "count": 1326,
+          "percentage": 6.16
+        },
+        "procurement_plan_item": {
+          "count": 508,
+          "percentage": 2.36
+        },
+        "doc_spec_sentence": {
+          "count": 374,
+          "percentage": 1.74
+        },
+        "tender_title": {
+          "count": 248,
+          "percentage": 1.15
+        },
+        "live_tender": {
+          "count": 138,
+          "percentage": 0.64
+        },
+        "doc_spec_string": {
+          "count": 41,
+          "percentage": 0.19
+        },
+        "work_description": {
+          "count": 33,
+          "percentage": 0.15
+        },
+        "doc_brief_description": {
+          "count": 23,
+          "percentage": 0.11
+        },
+        "corrigendum": {
+          "count": 23,
+          "percentage": 0.11
+        },
+        "doc_tender_title": {
+          "count": 10,
+          "percentage": 0.05
+        }
+      },
+      "sample_records": [
+        {
+          "corpus_id": "M000001",
+          "organization": "Indian Oil Corporation Limited",
+          "source_system": "iocl.com",
+          "source_section": "Future Procurement Plan FY2025-26",
+          "tender_reference": null,
+          "tender_id": null,
+          "description": "1236/1231",
+          "description_kind": "procurement_plan_item",
+          "item_type_hint": null,
+          "quantity": "1233",
+          "unit": null,
+          "location": null,
+          "product_category": null,
+          "document_url": "data/raw/iocl/tenders/Future_Procurement_Plan25-26.pdf",
+          "source_url": null
+        },
+        {
+          "corpus_id": "M000002",
+          "organization": "Indian Oil Corporation Limited",
+          "source_system": "iocl.com",
+          "source_section": "Future Procurement Plan FY2025-26",
+          "tender_reference": null,
+          "tender_id": null,
+          "description": "14.2 Kg Cylinders (Including New & Replacement)",
+          "description_kind": "procurement_plan_item",
+          "item_type_hint": null,
+          "quantity": null,
+          "unit": "Nos.",
+          "location": null,
+          "product_category": null,
+          "document_url": "data/raw/iocl/tenders/Future_Procurement_Plan25-26.pdf",
+          "source_url": null
+        },
+        {
+          "corpus_id": "M000003",
+          "organization": "Indian Oil Corporation Limited",
+          "source_system": "iocl.com",
+          "source_section": "Future Procurement Plan FY2025-26",
+          "tender_reference": null,
+          "tender_id": null,
+          "description": "1415/1417/1418",
+          "description_kind": "procurement_plan_item",
+          "item_type_hint": null,
+          "quantity": "1415",
+          "unit": null,
+          "location": null,
+          "product_category": null,
+          "document_url": "data/raw/iocl/tenders/Future_Procurement_Plan25-26.pdf",
+          "source_url": null
+        },
+        {
+          "corpus_id": "M000004",
+          "organization": "Indian Oil Corporation Limited",
+          "source_system": "iocl.com",
+          "source_section": "Future Procurement Plan FY2025-26",
+          "tender_reference": null,
+          "tender_id": null,
+          "description": "1507/1534",
+          "description_kind": "procurement_plan_item",
+          "item_type_hint": null,
+          "quantity": "1551",
+          "unit": null,
+          "location": null,
+          "product_category": null,
+          "document_url": "data/raw/iocl/tenders/Future_Procurement_Plan25-26.pdf",
+          "source_url": null
+        },
+        {
+          "corpus_id": "M000005",
+          "organization": "Indian Oil Corporation Limited",
+          "source_system": "iocl.com",
+          "source_section": "Future Procurement Plan FY2025-26",
+          "tender_reference": null,
+          "tender_id": null,
+          "description": "1599+3001/1543+460 1",
+          "description_kind": "procurement_plan_item",
+          "item_type_hint": null,
+          "quantity": "1553",
+          "unit": null,
+          "location": null,
+          "product_category": null,
+          "document_url": "data/raw/iocl/tenders/Future_Procurement_Plan25-26.pdf",
+          "source_url": null
+        }
+      ]
+    },
+    "ntpc": {
+      "key": "ntpc",
+      "filename": "ntpc_material_items.csv",
+      "label": "NTPC Structured Material Items",
+      "file_size_bytes": 55715,
+      "file_size_kb": 54.41,
+      "sha256": "a175d7783728e8cff7878b30dbcd401a41fcfe2e4d703d1fdccfe634951ff8bb",
+      "row_count": 486,
+      "column_count": 7,
+      "columns": [
+        "nit_id",
+        "doc_name",
+        "pattern",
+        "item_text",
+        "quantity",
+        "unit",
+        "line_no"
+      ],
+      "missing_values": {
+        "nit_id": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "doc_name": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "pattern": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "item_text": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "quantity": {
+          "null_or_empty_count": 486,
+          "null_or_empty_percentage": 100.0,
+          "dtype": "object"
+        },
+        "unit": {
+          "null_or_empty_count": 486,
+          "null_or_empty_percentage": 100.0,
+          "dtype": "object"
+        },
+        "line_no": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        }
+      },
+      "exact_duplicate_rows": 0,
+      "unique_descriptions": 445,
+      "duplicate_descriptions": 41,
+      "organisations": {},
+      "description_kinds": {
+        "spec_sentence": {
+          "count": 412,
+          "percentage": 84.77
+        },
+        "spec_string": {
+          "count": 41,
+          "percentage": 8.44
+        },
+        "brief_description": {
+          "count": 23,
+          "percentage": 4.73
+        },
+        "tender_title": {
+          "count": 10,
+          "percentage": 2.06
+        }
+      },
+      "sample_records": [
+        {
+          "nit_id": "28811",
+          "doc_name": "28811_NIT_Download.txt",
+          "pattern": "spec_sentence",
+          "item_text": "11KV DG Sets, Fire Water Pump House, 33KV and 11KV Transmission Line,",
+          "quantity": null,
+          "unit": null,
+          "line_no": "28"
+        },
+        {
+          "nit_id": "28816",
+          "doc_name": "28816_cor_28816_1_1.txt",
+          "pattern": "brief_description",
+          "item_text": "CHIMNEY PACKAGE FOR GADARWARA STPP STAGE",
+          "quantity": null,
+          "unit": null,
+          "line_no": "8"
+        },
+        {
+          "nit_id": "28860",
+          "doc_name": "28860_NIT_Download.txt",
+          "pattern": "spec_sentence",
+          "item_text": "PIPE:BLK, CORTEN,A423GR1,ERW,2MM,40MM",
+          "quantity": null,
+          "unit": null,
+          "line_no": "186"
+        },
+        {
+          "nit_id": "28868",
+          "doc_name": "28868_cor_28868_5_1.txt",
+          "pattern": "spec_sentence",
+          "item_text": "EDDY CRANE PUNE A UPTO 10 MT",
+          "quantity": null,
+          "unit": null,
+          "line_no": "6624"
+        },
+        {
+          "nit_id": "28868",
+          "doc_name": "28868_cor_28868_5_1.txt",
+          "pattern": "spec_sentence",
+          "item_text": "CONSOLIDATED HOIST SATARA /PUNE * A SATARA UP TO 60 MT HOIST,*PUNE FOR",
+          "quantity": null,
+          "unit": null,
+          "line_no": "6625"
+        }
+      ]
+    },
+    "iocl": {
+      "key": "iocl",
+      "filename": "iocl_procurement_plan_items.csv",
+      "label": "IOCL Procurement Plan Items",
+      "file_size_bytes": 184790,
+      "file_size_kb": 180.46,
+      "sha256": "6c132ca99a3181427300f77f73558e501aebba52ae4085af657781a4fe58ae17",
+      "row_count": 1224,
+      "column_count": 9,
+      "columns": [
+        "page",
+        "section",
+        "sl_no",
+        "item_description",
+        "quantity",
+        "unit",
+        "estimated_value_rs_crores",
+        "row_raw",
+        "source_pdf"
+      ],
+      "missing_values": {
+        "page": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "section": {
+          "null_or_empty_count": 1150,
+          "null_or_empty_percentage": 93.95,
+          "dtype": "object"
+        },
+        "sl_no": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "item_description": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "quantity": {
+          "null_or_empty_count": 101,
+          "null_or_empty_percentage": 8.25,
+          "dtype": "object"
+        },
+        "unit": {
+          "null_or_empty_count": 296,
+          "null_or_empty_percentage": 24.18,
+          "dtype": "object"
+        },
+        "estimated_value_rs_crores": {
+          "null_or_empty_count": 295,
+          "null_or_empty_percentage": 24.1,
+          "dtype": "object"
+        },
+        "row_raw": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        },
+        "source_pdf": {
+          "null_or_empty_count": 0,
+          "null_or_empty_percentage": 0.0,
+          "dtype": "object"
+        }
+      },
+      "exact_duplicate_rows": 0,
+      "unique_descriptions": 522,
+      "duplicate_descriptions": 702,
+      "organisations": {},
+      "description_kinds": {
+        "(missing)": {
+          "count": 1150,
+          "percentage": 93.95
+        },
+        "Capex Procurement Projected": {
+          "count": 58,
+          "percentage": 4.74
+        },
+        "Refineries": {
+          "count": 16,
+          "percentage": 1.31
+        }
+      },
+      "sample_records": [
+        {
+          "page": "1",
+          "section": "Refineries",
+          "sl_no": "1",
+          "item_description": "Vessels/Drums/Tanks",
+          "quantity": "99",
+          "unit": "Nos.",
+          "estimated_value_rs_crores": "108.06",
+          "row_raw": "Vessels/Drums/Tanks | 99 | Nos. | 108.06",
+          "source_pdf": "Future_Procurement_Plan25-26.pdf"
+        },
+        {
+          "page": "1",
+          "section": "Refineries",
+          "sl_no": "3",
+          "item_description": "Reactors",
+          "quantity": "10",
+          "unit": "Nos.",
+          "estimated_value_rs_crores": "240.00",
+          "row_raw": "Reactors | 10 | Nos. | 240.00",
+          "source_pdf": "Future_Procurement_Plan25-26.pdf"
+        },
+        {
+          "page": "1",
+          "section": "Refineries",
+          "sl_no": "4",
+          "item_description": "Column/Column Internals/Column Modification",
+          "quantity": "22",
+          "unit": "Nos.",
+          "estimated_value_rs_crores": "108.69",
+          "row_raw": "Column/Column Internals/Column Modification | 22 | Nos. | 108.69",
+          "source_pdf": "Future_Procurement_Plan25-26.pdf"
+        },
+        {
+          "page": "1",
+          "section": "Refineries",
+          "sl_no": "5",
+          "item_description": "Heat Ex/Air coolers/Fin Fan Coolers",
+          "quantity": "130",
+          "unit": "Nos.",
+          "estimated_value_rs_crores": "142.66",
+          "row_raw": "Heat Ex/Air coolers/Fin Fan Coolers | 130 | Nos. | 142.66",
+          "source_pdf": "Future_Procurement_Plan25-26.pdf"
+        },
+        {
+          "page": "1",
+          "section": "Refineries",
+          "sl_no": "6",
+          "item_description": "Filters",
+          "quantity": null,
+          "unit": "Nos.",
+          "estimated_value_rs_crores": null,
+          "row_raw": "Filters | - | Nos. | -",
+          "source_pdf": "Future_Procurement_Plan25-26.pdf"
+        }
+      ]
+    }
+  },
+  "corpus_breakdowns": {
+    "by_organization": {
+      "Oil India Limited": {
+        "count": 18950,
+        "percentage": 88.09
+      },
+      "NTPC Limited": {
+        "count": 1843,
+        "percentage": 8.57
+      },
+      "Indian Oil Corporation Limited": {
+        "count": 720,
+        "percentage": 3.35
+      }
+    },
+    "by_description_kind": {
+      "historical_tender": {
+        "count": 11183,
+        "percentage": 51.98
+      },
+      "tender_detail": {
+        "count": 3867,
+        "percentage": 17.98
+      },
+      "archived_tender": {
+        "count": 3739,
+        "percentage": 17.38
+      },
+      "nit_brief_description": {
+        "count": 1326,
+        "percentage": 6.16
+      },
+      "procurement_plan_item": {
+        "count": 508,
+        "percentage": 2.36
+      },
+      "doc_spec_sentence": {
+        "count": 374,
+        "percentage": 1.74
+      },
+      "tender_title": {
+        "count": 248,
+        "percentage": 1.15
+      },
+      "live_tender": {
+        "count": 138,
+        "percentage": 0.64
+      },
+      "doc_spec_string": {
+        "count": 41,
+        "percentage": 0.19
+      },
+      "work_description": {
+        "count": 33,
+        "percentage": 0.15
+      },
+      "doc_brief_description": {
+        "count": 23,
+        "percentage": 0.11
+      },
+      "corrigendum": {
+        "count": 23,
+        "percentage": 0.11
+      },
+      "doc_tender_title": {
+        "count": 10,
+        "percentage": 0.05
+      }
+    },
+    "by_item_type_hint": {
+      "(no_hint)": {
+        "count": 15164,
+        "percentage": 70.49
+      },
+      "pipe": {
+        "count": 1210,
+        "percentage": 5.62
+      },
+      "pump": {
+        "count": 925,
+        "percentage": 4.3
+      },
+      "tank": {
+        "count": 580,
+        "percentage": 2.7
+      },
+      "cable": {
+        "count": 330,
+        "percentage": 1.53
+      },
+      "steel": {
+        "count": 322,
+        "percentage": 1.5
+      },
+      "instrument": {
+        "count": 259,
+        "percentage": 1.2
+      },
+      "spares": {
+        "count": 246,
+        "percentage": 1.14
+      },
+      "chemical": {
+        "count": 236,
+        "percentage": 1.1
+      },
+      "valve": {
+        "count": 226,
+        "percentage": 1.05
+      },
+      "pipe fitting": {
+        "count": 200,
+        "percentage": 0.93
+      },
+      "compressor": {
+        "count": 184,
+        "percentage": 0.86
+      },
+      "safety valve": {
+        "count": 183,
+        "percentage": 0.85
+      },
+      "crane": {
+        "count": 181,
+        "percentage": 0.84
+      },
+      "transformer": {
+        "count": 150,
+        "percentage": 0.7
+      },
+      "motor": {
+        "count": 148,
+        "percentage": 0.69
+      },
+      "flange": {
+        "count": 141,
+        "percentage": 0.66
+      },
+      "gate valve": {
+        "count": 125,
+        "percentage": 0.58
+      },
+      "boiler": {
+        "count": 112,
+        "percentage": 0.52
+      },
+      "turbine": {
+        "count": 79,
+        "percentage": 0.37
+      },
+      "coupling": {
+        "count": 68,
+        "percentage": 0.32
+      },
+      "filter": {
+        "count": 67,
+        "percentage": 0.31
+      },
+      "bearing": {
+        "count": 56,
+        "percentage": 0.26
+      },
+      "chimney": {
+        "count": 56,
+        "percentage": 0.26
+      },
+      "switchgear": {
+        "count": 53,
+        "percentage": 0.25
+      },
+      "gasket": {
+        "count": 42,
+        "percentage": 0.2
+      },
+      "conveyor": {
+        "count": 36,
+        "percentage": 0.17
+      },
+      "check valve": {
+        "count": 29,
+        "percentage": 0.13
+      },
+      "ball valve": {
+        "count": 24,
+        "percentage": 0.11
+      },
+      "control valve": {
+        "count": 24,
+        "percentage": 0.11
+      },
+      "butterfly valve": {
+        "count": 17,
+        "percentage": 0.08
+      },
+      "heat exchanger": {
+        "count": 16,
+        "percentage": 0.07
+      },
+      "globe valve": {
+        "count": 11,
+        "percentage": 0.05
+      },
+      "gearbox": {
+        "count": 9,
+        "percentage": 0.04
+      },
+      "mechanical seal": {
+        "count": 4,
+        "percentage": 0.02
+      }
+    },
+    "cross_tab_org_vs_kind": {
+      "Indian Oil Corporation Limited": {
+        "archived_tender": 0,
+        "corrigendum": 0,
+        "doc_brief_description": 0,
+        "doc_spec_sentence": 0,
+        "doc_spec_string": 0,
+        "doc_tender_title": 0,
+        "historical_tender": 0,
+        "live_tender": 0,
+        "nit_brief_description": 0,
+        "procurement_plan_item": 508,
+        "tender_detail": 0,
+        "tender_title": 179,
+        "work_description": 33
+      },
+      "NTPC Limited": {
+        "archived_tender": 0,
+        "corrigendum": 0,
+        "doc_brief_description": 23,
+        "doc_spec_sentence": 374,
+        "doc_spec_string": 41,
+        "doc_tender_title": 10,
+        "historical_tender": 0,
+        "live_tender": 0,
+        "nit_brief_description": 1326,
+        "procurement_plan_item": 0,
+        "tender_detail": 0,
+        "tender_title": 69,
+        "work_description": 0
+      },
+      "Oil India Limited": {
+        "archived_tender": 3739,
+        "corrigendum": 23,
+        "doc_brief_description": 0,
+        "doc_spec_sentence": 0,
+        "doc_spec_string": 0,
+        "doc_tender_title": 0,
+        "historical_tender": 11183,
+        "live_tender": 138,
+        "nit_brief_description": 0,
+        "procurement_plan_item": 0,
+        "tender_detail": 3867,
+        "tender_title": 0,
+        "work_description": 0
+      }
+    },
+    "assessment_categories": {
+      "individual_material": {
+        "count": 9245,
+        "percentage": 42.97
+      },
+      "service_or_works": {
+        "count": 7696,
+        "percentage": 35.77
+      },
+      "unclassified_or_other": {
+        "count": 3463,
+        "percentage": 16.1
+      },
+      "administrative_notice": {
+        "count": 577,
+        "percentage": 2.68
+      },
+      "broad_tender_title": {
+        "count": 429,
+        "percentage": 1.99
+      },
+      "broad_tender_package": {
+        "count": 103,
+        "percentage": 0.48
+      }
+    },
+    "binary_assessment": {
+      "individual_material": {
+        "count": 9245,
+        "percentage": 42.97
+      },
+      "broad_tender_or_service": {
+        "count": 12268,
+        "percentage": 57.03
+      }
+    },
+    "cross_tab_org_vs_category": {
+      "Indian Oil Corporation Limited": {
+        "administrative_notice": 14,
+        "broad_tender_package": 0,
+        "broad_tender_title": 39,
+        "individual_material": 585,
+        "service_or_works": 73,
+        "unclassified_or_other": 9
+      },
+      "NTPC Limited": {
+        "administrative_notice": 91,
+        "broad_tender_package": 65,
+        "broad_tender_title": 390,
+        "individual_material": 897,
+        "service_or_works": 400,
+        "unclassified_or_other": 0
+      },
+      "Oil India Limited": {
+        "administrative_notice": 472,
+        "broad_tender_package": 38,
+        "broad_tender_title": 0,
+        "individual_material": 7763,
+        "service_or_works": 7223,
+        "unclassified_or_other": 3454
+      }
+    }
+  },
+  "overlap_analysis": {
+    "total_raw_rows_all_files": 23223,
+    "global_unique_descriptions": 17459,
+    "ntpc_in_corpus": {
+      "ntpc_file_rows": 486,
+      "ntpc_unique_descriptions": 445,
+      "ntpc_rows_matching_corpus_desc": 462,
+      "ntpc_unique_matching_corpus_desc": 423,
+      "ntpc_match_percentage": 95.06,
+      "corpus_doc_extracted_rows": 448,
+      "notes": "NTPC items were filtered (length 8-1200 chars) and deduplicated by (organization, description, description_kind) during corpus construction, resulting in 448 doc_* records in the main corpus."
+    },
+    "iocl_in_corpus": {
+      "iocl_file_rows": 1224,
+      "iocl_unique_descriptions": 522,
+      "iocl_rows_matching_corpus_desc": 1147,
+      "iocl_unique_matching_corpus_desc": 485,
+      "iocl_match_percentage": 93.71,
+      "corpus_procurement_plan_rows": 508,
+      "notes": "IOCL Procurement Plan items (1,224 rows) contain repeated standard categories across units. When filtered (length 8-1200 chars) and deduplicated by (organization, description, description_kind), exactly 508 unique procurement plan items entered the main corpus."
+    },
+    "cross_file_ntpc_vs_iocl": {
+      "common_descriptions_count": 0,
+      "common_samples": [],
+      "notes": "Zero intersection between NTPC items and IOCL procurement items; domain vocabularies reflect power generation vs petroleum refining."
+    },
+    "provenance_audit": {
+      "source_url_preserved": "source_url column present in corpus and raw files",
+      "document_url_preserved": "document_url column present in corpus, pointing to source PDFs/NITs",
+      "organization_preserved": "organization present across all corpus rows and traceable in child datasets",
+      "identifiers_preserved": [
+        "corpus_id",
+        "tender_reference",
+        "tender_id",
+        "nit_id",
+        "doc_name",
+        "line_no",
+        "page",
+        "section",
+        "sl_no"
+      ],
+      "ground_truth_policy": "Strict adherence to Phase 1 rules: No invented CPSE codes, no synthetic ground-truth pairs, and no unverified accuracy metrics."
+    }
+  }
+}
